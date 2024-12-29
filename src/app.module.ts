@@ -4,11 +4,12 @@ import { AppService } from './app.service';
 import { ReviewModule } from './review/review.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 console.log(ConfigModule.forRoot());
 
 @Module({
-  imports: [ReviewModule, ConfigModule.forRoot(), UserModule],
+  imports: [ReviewModule, ConfigModule.forRoot(), UserModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
