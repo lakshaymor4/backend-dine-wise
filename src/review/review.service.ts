@@ -6,32 +6,51 @@ import { User, Restraunt, Prisma, Review } from '@prisma/client';
 export class ReviewService {
   constructor(private prisma: PrismaService) {}
 
-  async getReviews(params: { restrauntId: Number }): Promise<Review[]> {
-    const { restrauntId } = params;
+  async getReviews(params: { id: number }): Promise<Review[]> {
+    const { id } = params;
     return this.prisma.review.findMany({
-      restrauntId: restrauntId,
+      where:{
+      restrauntId: id,
+      }
     });
   }
 
-  async getReviewByUserId(params: { userId: Number }): Promise<Review[]> {
-    const { userId } = params;
+  async getReviewByUserId(params: { id: number }): Promise<Review[]> {
+    const { id } = params;
     return this.prisma.review.findMany({
-      userId: userId,
+      where:{
+      userId: id,
+      }
     });
   }
 
-  async createReview(data: Prisma.ReviewCreateInput): Promise<Review> {
-    const restraunt = this.prisma.restraunt.findUnique({
-      where: { id: data.restrauntId },
-    });
-    if (restraunt && restraunt.ownerId != data.userId) {
-      return this.prisma.review.create({
-        data,
-      });
-    } else {
-      throw new Error('Action Not Allowed');
-    }
+ async createReview(data: Prisma.ReviewCreateInput): Promise<Review> {
+
+  const restrauntId = data.restraunt.connect?.id;
+
+  if (!restrauntId) {
+    throw new Error('Invalid restaurant ID');
   }
+
+ 
+  const restraunt = await this.prisma.restraunt.findUnique({
+    where: { id: restrauntId },
+  });
+
+  if (!restraunt) {
+    throw new Error('Restaurant not found');
+  }
+
+  
+  if (restraunt.ownerId !== data.user.connect?.id) {
+    return this.prisma.review.create({
+      data,
+    });
+  } else {
+    throw new Error('Action Not Allowed');
+  }
+}
+
   async updateReview(params: {
     where: Prisma.ReviewWhereUniqueInput;
     data: Prisma.ReviewUpdateInput;

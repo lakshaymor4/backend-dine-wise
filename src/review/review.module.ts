@@ -6,5 +6,6 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   controllers: [ReviewController],
   providers: [ReviewService],
+  exports: [ReviewService],
 })
 export class ReviewModule {}
