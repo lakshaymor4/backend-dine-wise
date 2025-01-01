@@ -2,7 +2,13 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { User, Restraunt, Prisma } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
-import bcrypt from 'bcrypt';
+import * as argon2 from "argon2";
+import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
+
+interface SignUpResponse {
+    success: boolean;
+    userId?: number;
+}
 
 @Injectable()
 export class AuthService {
@@ -24,33 +30,43 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException();
     } else {
-      const match = await bcrypt.compare(password, user.password);
+      const match = await argon2.verify(user.password,password);
       if (match) {
         const payload = { sub: user.id, username: user.name };
-        return { access_token: await this.jwtService.signAsync(payload) };
+        console.log(process.env.JWT_SECRET);
+        return { access_token: await this.jwtService.signAsync(payload,) };
       } else {
         throw new UnauthorizedException();
       }
     }
   }
 
-  async signUp(data: Prisma.UserCreateInput): Promise<User> {
-    const email = this.prisma.user.findUnique({
+  async signUp(data: Prisma.UserCreateInput): Promise<SignUpResponse> {
+    const email = await this.prisma.user.findUnique({
       where: {
         email: data.email,
       },
     });
 
     if (!email) {
-      const hashedPassword = await bcrypt.hash(data.password, 10);
-      return this.prisma.user.create({
-        data: {
-          ...data,
-          password: hashedPassword,
-        },
+      console.log(data.password);
+      const hashedPassword = await argon2.hash(data.password);
+      data.password = hashedPassword;
+     const userCreation = await this.prisma.user.create({
+        data
       });
+
+      if (userCreation) {
+        return { success: true, userId: userCreation.id };
+      } else {
+        throw new ExceptionsHandler();
+      }
+
     } else {
+      console.log(email);
       throw new UnauthorizedException();
     }
   }
 }
+
+export{SignUpResponse};
