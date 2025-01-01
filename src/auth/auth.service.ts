@@ -33,8 +33,12 @@ export class AuthService {
       const match = await argon2.verify(user.password,password);
       if (match) {
         const payload = { sub: user.id, username: user.name };
-        console.log(process.env.JWT_SECRET);
-        return { access_token: await this.jwtService.signAsync(payload,) };
+       const access_token = await this.jwtService.signAsync(payload, {
+        secret: process.env.JWT_SECRET, 
+        expiresIn: '1h',
+      });
+
+      return { access_token };
       } else {
         throw new UnauthorizedException();
       }
@@ -49,7 +53,6 @@ export class AuthService {
     });
 
     if (!email) {
-      console.log(data.password);
       const hashedPassword = await argon2.hash(data.password);
       data.password = hashedPassword;
      const userCreation = await this.prisma.user.create({
@@ -63,7 +66,6 @@ export class AuthService {
       }
 
     } else {
-      console.log(email);
       throw new UnauthorizedException();
     }
   }
