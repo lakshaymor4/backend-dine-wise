@@ -36,6 +36,7 @@ model Restraunt {
   updatedAt DateTime  @updatedAt    
   reviews   Review[]
   ownerId   Int
+  status    Boolean   @default(true)
   owner User @relation(fields: [ownerId], references: [id]) 
 }
 

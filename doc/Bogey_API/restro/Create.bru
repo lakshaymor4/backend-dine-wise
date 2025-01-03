@@ -1,0 +1,19 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Base_URL}}/restro/create
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"Test1",
+    "address":"add1",
+    "owner":2
+  }
+}

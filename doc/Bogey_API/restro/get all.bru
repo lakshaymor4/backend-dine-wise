@@ -1,0 +1,17 @@
+meta {
+  name: get all
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{Base_URL}}/restro/getall
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id":2
+  }
+}

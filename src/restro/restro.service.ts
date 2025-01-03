@@ -8,6 +8,18 @@ interface RestrauntResponse {
     success: boolean;
 }
 
+interface RestrauntGetAllResponse {
+    id: number;
+    name: string;
+    address: string;
+    status: boolean;
+    reviews: any;
+    positive: number;
+    negative: number;
+
+}
+
+
 @Injectable()
 export class RestroService {
     constructor(private prisma: PrismaService) { }
@@ -34,7 +46,50 @@ export class RestroService {
 
     }
 
+    async updateRestraunt(params: {
+        where: Prisma.RestrauntWhereUniqueInput,
+        data: Prisma.RestrauntUpdateInput
+    }): Promise<Restraunt> {
+        try {
+            const { data, where } = params;
+            return await this.prisma.restraunt.update({
+                data,
+                where
+            })
+
+        }
+        catch {
+            throw new ExceptionsHandler();
+        }
+    }
+
+    async getAllRestrauntsByOwnerId(data: { ownerId: number }): Promise<RestrauntGetAllResponse[]> {
+        return await this.prisma.restraunt.findMany({
+            where: {
+                ownerId: data.ownerId
+            },
+            select: {
+                id: true,
+                name: true,
+                address: true,
+                status: true,
+                positive: true,
+                negative: true,
+                reviews: true,
+            }
+
+        })
+    }
+
+    async getRestrauntById(data: { restrauntId: number }): Promise<Restraunt> {
+        return await this.prisma.restraunt.findUnique({ where: { id: data.restrauntId } });
+
+    }
+
+
 }
+
+export { RestrauntResponse, RestrauntGetAllResponse };
 
 
 

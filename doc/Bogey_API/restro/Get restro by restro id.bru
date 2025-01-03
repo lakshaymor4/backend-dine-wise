@@ -1,0 +1,15 @@
+meta {
+  name: Get restro by restro id
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{Base_URL}}/restro/getrestro/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 2
+}
