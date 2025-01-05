@@ -57,9 +57,9 @@ export class RestroController {
     @Post('getall')
 
     async getAll(
-        @Body() data: { id: number }
+        @Request() req
     ): Promise<RestrauntGetAllResponse[]> {
-        return this.restroService.getAllRestrauntsByOwnerId({ ownerId: data.id });
+        return this.restroService.getAllRestrauntsByOwnerId({ ownerId: req.user.sub });
     }
     @HttpCode(HttpStatus.OK)
     @Get('getrestro/:id')

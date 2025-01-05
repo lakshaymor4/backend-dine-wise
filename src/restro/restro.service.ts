@@ -64,6 +64,7 @@ export class RestroService {
     }
 
     async getAllRestrauntsByOwnerId(data: { ownerId: number }): Promise<RestrauntGetAllResponse[]> {
+
         return await this.prisma.restraunt.findMany({
             where: {
                 ownerId: data.ownerId
@@ -83,7 +84,6 @@ export class RestroService {
 
     async getRestrauntById(data: { restrauntId: number }): Promise<Restraunt> {
         return await this.prisma.restraunt.findUnique({ where: { id: data.restrauntId } });
-
     }
 
 
