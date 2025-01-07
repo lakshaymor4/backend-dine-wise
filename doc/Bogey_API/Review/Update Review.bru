@@ -1,0 +1,22 @@
+meta {
+  name: Update Review
+  type: http
+  seq: 2
+}
+
+patch {
+  url: {{Base_URL}}/review/update
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoiYWJjZGVmZ2hpIiwiaWF0IjoxNzM2MjcyODk3LCJleHAiOjE3MzYyNzY0OTd9.6iPW6H8-twupzSWBdx6pXFsqIrcnnoFx-fuo79lNYg4
+}
+
+body:json {
+  {
+    "id":1,
+    "review":"This is an updates review"
+  }
+}

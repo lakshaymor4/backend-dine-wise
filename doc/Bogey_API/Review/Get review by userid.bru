@@ -1,0 +1,15 @@
+meta {
+  name: Get review by userid
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{Base_URL}}/review/getall
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoiYWJjZGVmZ2hpIiwiaWF0IjoxNzM2MjczMzAxLCJleHAiOjE3MzYyNzY5MDF9.q4KoFQ3EYnLVqWbWwwBknxZppGK_SYVmFPrg3SXuavQ
+}

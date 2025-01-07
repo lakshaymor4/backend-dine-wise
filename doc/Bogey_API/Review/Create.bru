@@ -1,0 +1,23 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{Base_URL}}/review/create
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoiYWJjZGVmZ2hpIiwiaWF0IjoxNzM2MjcyNjkzLCJleHAiOjE3MzYyNzYyOTN9.9TQ1oOF5USghemtvk04loegYItC_yT_4F5UWKi-MkN4
+}
+
+body:json {
+  {
+    "restrauntId":2,
+    "review":"Best restraunt ever"
+    
+  }
+}

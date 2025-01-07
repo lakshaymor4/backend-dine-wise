@@ -7,11 +7,13 @@ meta {
 post {
   url: {{Base_URL}}/restro/getall
   body: json
-  auth: none
+  auth: bearer
 }
 
-body:json {
-  {
-    "id":2
-  }
+headers {
+  : 
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiYWJjZGVmZ2hpIiwiaWF0IjoxNzM2MjcyNzI1LCJleHAiOjE3MzYyNzYzMjV9.-x-dRTUVOBxP5ftEPmn5w653oUI35W86vaEDSln29AM
 }
