@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ReviewRetro } from './review.service';
 
 
 
@@ -76,7 +77,7 @@ export class ReviewController {
     @Get('getall')
     async getAll(
         @Request() req
-    ) {
+    ): Promise<ReviewRetro[]> {
         return this.reviewservice.getReviewByUserId({ id: req.user.sub });
     }
 

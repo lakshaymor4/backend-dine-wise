@@ -1,0 +1,15 @@
+meta {
+  name: top restro
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{Base_URL}}/leaderboard/top?limit=100
+  body: none
+  auth: none
+}
+
+params:query {
+  limit: 100
+}

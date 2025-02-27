@@ -7,13 +7,16 @@ meta {
 post {
   url: {{Base_URL}}/restro/create
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoiYWJjZGVmZ2hpIiwiaWF0IjoxNzM5NDU1NjUyLCJleHAiOjE3Mzk0NTkyNTJ9.uE2-DrD-OXu-y92B-12EaIjYN0v2gDJ46i4BHmc0rCQ
 }
 
 body:json {
   {
-    "name":"Test1",
-    "address":"add1",
-    "owner":2
+    "name":"Test7",
+    "address":"add1"
   }
 }

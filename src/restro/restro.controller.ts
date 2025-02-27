@@ -11,42 +11,51 @@ import {
     Patch,
     Param,
 } from '@nestjs/common';
-import { RestroService, RestrauntResponse, RestrauntGetAllResponse } from './restro.service';
+import { RestroService, RestrauntResponse, RestrauntGetAllResponse, RestrauntResp } from './restro.service';
+
 import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('restro')
 export class RestroController {
     constructor(private restroService: RestroService) { }
 
+    @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.CREATED)
     @Post('create')
 
     async create(
-        @Body() data: { name: string; address: string; owner: number }
+        @Body() data: { name: string; address: string; },
+        @Request() req
     ): Promise<RestrauntResponse> {
 
         const transformedData = {
             name: data.name,
             address: data.address,
             owner: {
-                connect: { id: data.owner },
+                connect: { id: req.user.sub },
             },
         };
 
         return this.restroService.createRestraunt(transformedData);
     }
 
+    @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.OK)
     @Patch('update')
 
     async update(
-        @Body() data: { id: number, name: string, address: string, status: boolean }) {
+        @Body() data: { id: number, name: string, address: string, status: boolean },
+        @Request() req
+    ) {
         const transformedData = {
             where: { id: data.id },
             data: {
                 name: data.name,
                 address: data.address,
                 status: data.status,
+                owner: {
+                    connect: { id: req.user.sub },
+                },
             },
         };
         return this.restroService.updateRestraunt(transformedData);
@@ -54,7 +63,7 @@ export class RestroController {
     }
     @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.OK)
-    @Post('getall')
+    @Get('getall')
 
     async getAll(
         @Request() req
@@ -70,6 +79,16 @@ export class RestroController {
         return this.restroService.getRestrauntById({ restrauntId: +id })
 
     }
+
+    @HttpCode(HttpStatus.OK)
+    @Get('getallrestro')
+
+    async getAllrestro(
+    ): Promise<RestrauntResp[]> {
+        return this.restroService.getAllRestraunts();
+    }
+
+
 
 
 

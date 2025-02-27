@@ -7,13 +7,16 @@ meta {
 patch {
   url: {{Base_URL}}/restro/update
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoiYWJjZGVmZ2hpIiwiaWF0IjoxNzM5NDYxNDgwLCJleHAiOjE3Mzk0NjUwODB9.zjp2vKcEzGjXGlvv9y1gi5p2TezZzKk7ZUhgQb7FewY
 }
 
 body:json {
   {
-    "id":1,
-    "name":"updated name",
-    "status":false
+    "id":21,
+    "name":"updated name 7"
   }
 }
