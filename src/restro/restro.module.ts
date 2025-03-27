@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RestroService } from './restro.service';
 import { RestroController } from './restro.controller';
-import { PrismaModuleModule } from 'src/prisma-module/prisma-module.module';
+import { PrismaModuleModule } from '../prisma-module/prisma-module.module';
 
 @Module({
   imports: [PrismaModuleModule],

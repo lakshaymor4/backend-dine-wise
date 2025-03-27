@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CacheService } from '../cache/cache.service';
 import { LeaderboardEntry, LeaderboardEntryId } from './leaderboard.interface';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { Prisma, Review } from '@prisma/client';
 
 

@@ -1,13 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { User, Restraunt, Prisma } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from "argon2";
 import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 interface SignUpResponse {
-    success: boolean;
-    userId?: number;
+  success: boolean;
+  userId?: number;
 }
 
 @Injectable()
@@ -15,7 +15,7 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async login(data: {
     email: string;
@@ -30,15 +30,15 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException();
     } else {
-      const match = await argon2.verify(user.password,password);
+      const match = await argon2.verify(user.password, password);
       if (match) {
         const payload = { sub: user.id, username: user.name };
-       const access_token = await this.jwtService.signAsync(payload, {
-        secret: process.env.JWT_SECRET, 
-        expiresIn: '1h',
-      });
+        const access_token = await this.jwtService.signAsync(payload, {
+          secret: process.env.JWT_SECRET,
+          expiresIn: '1h',
+        });
 
-      return { access_token };
+        return { access_token };
       } else {
         throw new UnauthorizedException();
       }
@@ -55,7 +55,7 @@ export class AuthService {
     if (!email) {
       const hashedPassword = await argon2.hash(data.password);
       data.password = hashedPassword;
-     const userCreation = await this.prisma.user.create({
+      const userCreation = await this.prisma.user.create({
         data
       });
 
@@ -71,4 +71,4 @@ export class AuthService {
   }
 }
 
-export{SignUpResponse};
+export { SignUpResponse };

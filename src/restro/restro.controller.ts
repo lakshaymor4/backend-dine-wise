@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { RestroService, RestrauntResponse, RestrauntGetAllResponse, RestrauntResp } from './restro.service';
 
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('restro')
 export class RestroController {

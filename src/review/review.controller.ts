@@ -13,7 +13,7 @@ import {
     Delete,
 } from '@nestjs/common';
 import { ReviewService } from './review.service';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 import { ReviewRetro } from './review.service';
 
 

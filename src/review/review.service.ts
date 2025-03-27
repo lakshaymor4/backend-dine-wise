@@ -6,10 +6,10 @@ import {
   NotFoundException,
   InternalServerErrorException
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { Prisma, Review } from '@prisma/client';
 import axios from 'axios';
-import { CacheService } from 'src/cache/cache.service';
+import { CacheService } from '../cache/cache.service';
 
 interface ReviewResponse {
   id: number;

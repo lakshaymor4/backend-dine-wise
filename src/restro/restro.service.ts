@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { User, Restraunt, Prisma } from '@prisma/client';
-import { CacheService } from 'src/cache/cache.service';
+import { CacheService } from '../cache/cache.service';
 
 interface RestrauntResponse {
     id: number;
